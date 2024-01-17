@@ -33,7 +33,7 @@ const PostForm = ({
 			className='flex flex-col gap-8 w-full mx-auto border rounded-md border-gray-300 p-10'
 		>
 			<div className='flex items-center w-full'>
-				<button onClick={() => router.back()}>
+				<button type='button' onClick={() => router.back()}>
 					<FaArrowLeft className='text-2xl text-gray-600' />
 				</button>
 

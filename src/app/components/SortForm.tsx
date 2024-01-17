@@ -16,7 +16,7 @@ const SortForm = () => {
 				onChange={(e) => setSort(e.target.value)}
 			>
 				{sortOptions.map((sortOption) => (
-					<option value={sortOption} className='bg-white'>
+					<option key={sortOption} value={sortOption} className='bg-white'>
 						{sortOption}
 					</option>
 				))}
