@@ -2,6 +2,8 @@
 
 import { FormEvent, useState } from 'react';
 import axios from 'axios';
+import Link from 'next/link';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const initialState = {
 	title: '',
@@ -21,7 +23,14 @@ const CreatePostPage = () => {
 			onSubmit={handleSubmit}
 			className='flex flex-col gap-8 w-full mx-auto border rounded-md border-gray-300 p-10'
 		>
-			<h1 className='text-2xl font-bold text-center'>Create Post</h1>
+			<div className='flex items-center w-full'>
+				<Link href='/'>
+					<FaArrowLeft className='text-2xl text-gray-600' />
+				</Link>
+
+				<h1 className='text-2xl font-bold text-center w-full'>Create Post</h1>
+			</div>
+
 			<div className='flex flex-col md:flex-row gap-2 justify-center w-full'>
 				<label htmlFor='title' className='w-1/5'>
 					Title

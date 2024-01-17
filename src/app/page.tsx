@@ -13,7 +13,7 @@ export default async function Home() {
 			{/* Menu */}
 
 			<div className='flex items-center gap-10'>
-				<Link href='/create'>
+				<Link href='/posts/create'>
 					<button className='bg-black text-white rounded-md p-3'>
 						<FaPlus />
 					</button>
@@ -27,7 +27,9 @@ export default async function Home() {
 			{/* Posts */}
 			<div className='flex flex-col gap-4 mt-10'>
 				{posts?.map((post: any) => (
-					<PostCard post={post} key={post.id} />
+					<Link href={`/posts/1`} key={post.id}>
+						<PostCard post={post} />
+					</Link>
 				))}
 			</div>
 		</div>
