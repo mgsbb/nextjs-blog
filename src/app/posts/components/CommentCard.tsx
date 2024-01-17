@@ -3,14 +3,15 @@ import { Comment } from '@prisma/client';
 import { CiUser } from 'react-icons/ci';
 import { IoTimeOutline } from 'react-icons/io5';
 import { FiEdit2 } from 'react-icons/fi';
-import { AiOutlineDelete } from 'react-icons/ai';
+import AddComment from './AddComment';
+import DeleteComment from './DeleteComment';
 
 const CommentCard = ({
 	comment,
-	userId,
+	currentUserId,
 }: {
 	comment: Comment;
-	userId: string | undefined;
+	currentUserId: string | undefined;
 }) => {
 	return (
 		<div className='border rounded border-gray-300 text-gray-600 p-4 flex flex-col gap-2'>
@@ -34,14 +35,15 @@ const CommentCard = ({
 					</div>
 				</div>
 
-				{userId === comment.id && (
+				{currentUserId === comment.id && (
 					<div className='flex items-center gap-4'>
-						<button>
-							<FiEdit2 />
-						</button>
-						<button>
-							<AiOutlineDelete />
-						</button>
+						<AddComment
+							postId={comment.postId}
+							comment={comment}
+							buttonContent={<FiEdit2 />}
+							isEdit={true}
+						/>
+						<DeleteComment commentId={comment.id} />
 					</div>
 				)}
 			</div>

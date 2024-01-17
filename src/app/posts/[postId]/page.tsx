@@ -4,8 +4,9 @@ import { getCommentsByPostId, getCurrentUser, getPostById } from '@/actions';
 import { BsPen } from 'react-icons/bs';
 import { IoTimeOutline } from 'react-icons/io5';
 import { LiaCommentAlt } from 'react-icons/lia';
-import DeleteButton from '../components/DeleteButton';
+import DeletePostButton from '../components/DeletePostButton';
 import CommentCard from '../components/CommentCard';
+import AddComment from '../components/AddComment';
 
 const PostPage = async ({
 	params: { postId },
@@ -54,7 +55,7 @@ const PostPage = async ({
 									Edit
 								</button>
 							</Link>
-							<DeleteButton postId={postId} />
+							<DeletePostButton postId={postId} />
 						</div>
 					)}
 				</div>
@@ -87,19 +88,13 @@ const PostPage = async ({
 
 			{/* Comment */}
 
-			<div className='flex flex-col gap-10'>
-				<form className='flex flex-col gap-2'>
-					<h3 className='font-semibold text-gray-500'>Post a comment</h3>
-					<textarea
-						id='commentBody'
-						name='commentBody'
-						rows={5}
-						className='border border-gray-300 rounded-md w-full p-2'
-					/>
-					<button className='bg-black text-white rounded-md py-2 size-fit px-4'>
-						Add
-					</button>
-				</form>
+			<div className='flex flex-col gap-10 w-full'>
+				<AddComment
+					postId={postId}
+					buttonStyles='bg-black text-white py-2 px-4 rounded-md size-fit'
+					buttonContent='Post new comment'
+					isEdit={false}
+				/>
 
 				<div>
 					<h2 className='text-2xl font-semibold my-4'>Comments</h2>
@@ -109,7 +104,7 @@ const PostPage = async ({
 							<CommentCard
 								key={comment.id}
 								comment={comment}
-								userId={currentUser?.id}
+								currentUserId={currentUser?.id}
 							/>
 						))}
 					</div>

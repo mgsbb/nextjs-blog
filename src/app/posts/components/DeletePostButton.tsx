@@ -2,7 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 
-const DeleteButton = ({ postId }: { postId: string }) => {
+const DeletePostButton = ({ postId }: { postId: string }) => {
 	return (
 		<button
 			onClick={() => axios.delete(`/api/posts/${postId}`)}
@@ -14,4 +14,4 @@ const DeleteButton = ({ postId }: { postId: string }) => {
 	);
 };
 
-export default DeleteButton;
+export default DeletePostButton;
