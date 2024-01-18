@@ -4,7 +4,7 @@ import { CiUser } from 'react-icons/ci';
 import { IoTimeOutline } from 'react-icons/io5';
 import { FiEdit2 } from 'react-icons/fi';
 import AddComment from './AddComment';
-import DeleteComment from './DeleteComment';
+import DeleteCommentButton from './DeleteCommentButton';
 import { getUserById } from '@/actions';
 
 const CommentCard = async ({
@@ -47,7 +47,7 @@ const CommentCard = async ({
 							buttonContent={<FiEdit2 />}
 							isEdit={true}
 						/>
-						<DeleteComment commentId={comment.id} />
+						<DeleteCommentButton commentId={comment.id} />
 					</div>
 				)}
 			</div>

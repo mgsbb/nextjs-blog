@@ -20,7 +20,7 @@ const CommentForm = ({
 	commentProp?: Comment;
 }) => {
 	const router = useRouter();
-	const [comment, setComment] = useState(commentProp?.body);
+	const [comment, setComment] = useState(commentProp?.body || '');
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -30,9 +30,11 @@ const CommentForm = ({
 					comment,
 				});
 				toast.success('Comment updated!');
+				setComment('');
 			} else {
 				await axios.post('/api/comments', { comment, postId });
 				toast.success('Comment added!');
+				setComment('');
 			}
 		} catch (error) {
 			console.log(error);
