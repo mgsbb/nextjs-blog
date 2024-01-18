@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Dialog } from '@headlessui/react';
 import { Comment } from '@prisma/client';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 
 const CommentForm = ({
 	postId,
@@ -21,15 +22,23 @@ const CommentForm = ({
 	const router = useRouter();
 	const [comment, setComment] = useState(commentProp?.body);
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (isEdit) {
-			axios.patch(`/api/comments/${commentProp?.id}`, {
-				comment,
-			});
-		} else {
-			axios.post('/api/comments', { comment, postId });
+		try {
+			if (isEdit) {
+				await axios.patch(`/api/comments/${commentProp?.id}`, {
+					comment,
+				});
+				toast.success('Comment updated!');
+			} else {
+				await axios.post('/api/comments', { comment, postId });
+				toast.success('Comment added!');
+			}
+		} catch (error) {
+			console.log(error);
+			toast.error('Something went wrong...');
 		}
+
 		setIsOpen(false);
 		setTimeout(() => {
 			router.refresh();

@@ -1,5 +1,5 @@
 import Navbar from './Navbar';
-import PostCard from './PostCard';
+import PostCard from '../(home)/posts/components/PostCard';
 import SearchForm from './SearchForm';
 import SortForm from './SortForm';
 

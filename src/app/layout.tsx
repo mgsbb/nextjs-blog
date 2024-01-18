@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import AuthContext from '@/context/AuthContext';
 import './globals.css';
-import Navbar from './components/Navbar';
+import { Toaster } from 'react-hot-toast';
+import NextUIContext from '@/context/NextUIContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,7 +20,10 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
-				<AuthContext>{children}</AuthContext>
+				<AuthContext>
+					<Toaster />
+					{children}
+				</AuthContext>
 			</body>
 		</html>
 	);

@@ -4,7 +4,7 @@ import { FormEvent, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { FaArrowLeft } from 'react-icons/fa';
-import { Post } from '@prisma/client';
+import { toast } from 'react-hot-toast';
 
 const PostForm = ({
 	initialState,
@@ -18,17 +18,24 @@ const PostForm = ({
 	const [formState, setFormState] = useState(initialState);
 	const router = useRouter();
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (isEdit) {
-			axios.patch(`/api/posts/${postId}`, formState);
-		} else {
-			axios.post('/api/posts', formState);
+		try {
+			if (isEdit) {
+				await axios.patch(`/api/posts/${postId}`, formState);
+				toast.success('Post updated successfully! Redirecting...');
+			} else {
+				await axios.post('/api/posts', formState);
+				toast.success('Post created successfully! Redirecting...');
+			}
+			setTimeout(() => {
+				router.push('/');
+				router.refresh();
+			}, 200);
+		} catch (error) {
+			console.log(error);
+			toast.error('Something went wrong...');
 		}
-		router.push('/');
-		setTimeout(() => {
-			router.refresh();
-		}, 200);
 	};
 
 	return (

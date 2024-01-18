@@ -21,7 +21,16 @@ const PostPage = async ({
 	const post = await getPostById(postId);
 
 	if (!post) {
-		return <>Loading...</>;
+		return (
+			<div className='flex flex-col gap-6 w-full mx-auto items-center justify-self-center'>
+				<h1 className='text-2xl'>Post not found...</h1>
+				<Link href='/'>
+					<button className='bg-black text-white py-2 px-4 rounded-md size-fit'>
+						Back home
+					</button>
+				</Link>
+			</div>
+		);
 	}
 
 	const currentUser = await getCurrentUser();

@@ -4,9 +4,8 @@ import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import { BsGoogle } from 'react-icons/bs';
-import AuthInput from './components/AuthInput';
-import AuthSeparator from './components/AuthSeparator';
+import { toast } from 'react-hot-toast';
+import AuthInput from './AuthInput';
 
 export default function AuthPage() {
 	const session = useSession();
@@ -30,10 +29,12 @@ export default function AuthPage() {
 			redirect: false,
 		}).then((callback) => {
 			if (callback?.error) {
-				console.log('Failed');
+				console.log('error');
+				toast.error('Invalid credentials');
 			}
 			if (callback?.ok) {
-				console.log('success');
+				toast.success('Success! Redirecting...');
+				router.push('/');
 			}
 		});
 	};
@@ -110,18 +111,6 @@ export default function AuthPage() {
            hover:bg-gray-100'
 				>
 					{isLogin ? 'Sign In' : 'Sign Up'}
-				</button>
-
-				<AuthSeparator />
-
-				<button
-					type='button'
-					onClick={handleGoogleLogin}
-					className='flex items-center justify-center gap-4 rounded-md p-2 font-semibold 
-        text-gray-500 ring-1 ring-gray-300'
-				>
-					<BsGoogle />
-					Google
 				</button>
 
 				<div className='space-x-1 text-center text-sm text-gray-500'>
