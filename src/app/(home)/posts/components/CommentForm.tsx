@@ -3,6 +3,7 @@ import { useState, FormEvent, Dispatch, SetStateAction } from 'react';
 import axios from 'axios';
 import { Dialog } from '@headlessui/react';
 import { Comment } from '@prisma/client';
+import { useRouter } from 'next/navigation';
 
 const CommentForm = ({
 	postId,
@@ -17,6 +18,7 @@ const CommentForm = ({
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
 	commentProp?: Comment;
 }) => {
+	const router = useRouter();
 	const [comment, setComment] = useState(commentProp?.body);
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -28,6 +30,10 @@ const CommentForm = ({
 		} else {
 			axios.post('/api/comments', { comment, postId });
 		}
+		setIsOpen(false);
+		setTimeout(() => {
+			router.refresh();
+		}, 100);
 	};
 
 	return (

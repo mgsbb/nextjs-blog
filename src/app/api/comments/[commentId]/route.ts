@@ -69,6 +69,7 @@ export async function DELETE(
 				id: commentId,
 			},
 		});
+		return NextResponse.json({ message: 'Comment deleted successfully' });
 	} catch (error) {
 		console.log(error);
 		return NextResponse.json({ message: 'Server error' });

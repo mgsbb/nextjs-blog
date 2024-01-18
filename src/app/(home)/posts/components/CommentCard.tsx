@@ -5,37 +5,41 @@ import { IoTimeOutline } from 'react-icons/io5';
 import { FiEdit2 } from 'react-icons/fi';
 import AddComment from './AddComment';
 import DeleteComment from './DeleteComment';
+import { getUserById } from '@/actions';
 
-const CommentCard = ({
+const CommentCard = async ({
 	comment,
 	currentUserId,
 }: {
 	comment: Comment;
 	currentUserId: string | undefined;
 }) => {
+	const author = await getUserById(comment.authorId);
+
+	const ISOstring = comment.updatedAt.toISOString();
+
+	const date =
+		ISOstring.split('T')[0] + ' ' + ISOstring.split('T')[1].split('.')[0];
+
 	return (
 		<div className='border rounded border-gray-300 text-gray-600 p-4 flex flex-col gap-2'>
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem qui
-				odio exercitationem odit perferendis modi fugiat, alias cum aut ea id
-				nisi minima, quod unde, harum porro dolorum? Nulla, rem!
-			</p>
+			<p>{comment.body}</p>
 
 			<div className='flex items-center justify-between'>
 				<div className='flex gap-4 '>
 					<div className='flex items-center gap-2'>
 						<CiUser />
-						<span className='text-sm'>User</span>
+						<span className='text-sm'>{author?.name}</span>
 					</div>
 
 					<div className='flex items-center gap-2'>
 						<IoTimeOutline />
 
-						<span className='text-sm'>Time</span>
+						<span className='text-sm'>{date}</span>
 					</div>
 				</div>
 
-				{currentUserId === comment.id && (
+				{currentUserId === comment.authorId && (
 					<div className='flex items-center gap-4'>
 						<AddComment
 							postId={comment.postId}

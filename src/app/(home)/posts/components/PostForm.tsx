@@ -25,6 +25,10 @@ const PostForm = ({
 		} else {
 			axios.post('/api/posts', formState);
 		}
+		router.push('/');
+		setTimeout(() => {
+			router.refresh();
+		}, 200);
 	};
 
 	return (

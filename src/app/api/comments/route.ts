@@ -13,7 +13,7 @@ export async function POST(request: Request) {
 		}
 
 		const newComment = await prisma.comment.create({
-			data: { body, authorId: currentUser.id, postId },
+			data: { body: comment, authorId: currentUser.id, postId },
 		});
 
 		return NextResponse.json(newComment);
