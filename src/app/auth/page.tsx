@@ -52,18 +52,6 @@ export default function AuthPage() {
 		}
 	};
 
-	const handleGoogleLogin = () => {
-		signIn('google', { redirect: false }).then((callback) => {
-			if (callback?.error) {
-				console.log('Invalid credentials!');
-			}
-
-			if (callback?.ok) {
-				router.push('/');
-			}
-		});
-	};
-
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setFormData(() => {
 			return { ...formData, [e.target.name]: e.target.value };

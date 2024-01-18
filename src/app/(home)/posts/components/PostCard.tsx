@@ -15,7 +15,6 @@ const PostCard = async ({ post }: { post: Post }) => {
 	const authorName = author?.name;
 
 	const comments = await getCommentsByPostId(post.id);
-	console.log(comments);
 
 	return (
 		<div
