@@ -24,7 +24,6 @@ const CommentForm = ({
 		if (isEdit) {
 			axios.patch(`/api/comments/${commentProp?.id}`, {
 				comment,
-				postId,
 			});
 		} else {
 			axios.post('/api/comments', { comment, postId });

@@ -51,7 +51,7 @@ const PostPage = async ({
 					{currentUser?.id === post?.authorId && (
 						<div className='flex gap-4'>
 							<Link href={`/posts/${postId}/edit`}>
-								<button className='border border-black rounded-md px-4 py-2 hover:bg-gray-100'>
+								<button className='border border-black font-bold rounded-md px-4 py-2 hover:bg-gray-100'>
 									Edit
 								</button>
 							</Link>
