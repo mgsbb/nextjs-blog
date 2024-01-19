@@ -5,6 +5,7 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 import ConfirmationDialog from './ConfirmationDialog';
 import toast from 'react-hot-toast';
+import { ObjectId } from 'mongodb';
 
 const DeleteCommentButton = ({ commentId }: { commentId: string }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,7 @@ const DeleteCommentButton = ({ commentId }: { commentId: string }) => {
 			}, 200);
 		} catch (error) {
 			toast.error('Error deleting comment');
-			console.log(error);
+			console.error(error);
 		}
 	};
 

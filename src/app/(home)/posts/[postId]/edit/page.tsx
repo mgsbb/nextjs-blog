@@ -1,13 +1,14 @@
 import React from 'react';
 import PostForm from '../../components/PostForm';
 import { getPostById } from '@/actions';
+import { ObjectId } from 'mongodb';
 
 const PostEditPage = async ({
 	params: { postId },
 }: {
 	params: { postId: string };
 }) => {
-	const post = await getPostById(postId);
+	const post = await getPostById(postId.toString());
 
 	if (!post) {
 		return <>Loading</>;

@@ -1,27 +1,28 @@
 import { getCommentsByPostId, getUserById } from '@/actions';
-import { Post } from '@prisma/client';
+// import { Post } from '@prisma/client';
+import type { Post } from '@/types';
 import { BsPen } from 'react-icons/bs';
 import { IoTimeOutline } from 'react-icons/io5';
 import { LiaCommentAlt } from 'react-icons/lia';
 
 const PostCard = async ({ post }: { post: Post }) => {
-	const ISOstring = post.updatedAt.toISOString();
+	const ISOstring = post.updatedAt?.toISOString();
 
 	const date =
-		ISOstring.split('T')[0] + ' ' + ISOstring.split('T')[1].split('.')[0];
+		ISOstring?.split('T')[0] + ' ' + ISOstring?.split('T')[1].split('.')[0];
 
-	const author = await getUserById(post.authorId);
+	const author = await getUserById(post.authorId.toString());
 
 	const authorName = author?.name;
 
-	const comments = await getCommentsByPostId(post.id);
+	const comments = await getCommentsByPostId(post._id.toString());
 
 	return (
 		<div
 			className='border border-gray-300 p-6 rounded-md w-full
      text-gray-500 flex flex-col gap-4'
 		>
-			<h2 className='font-semibold text-lg'>{post.title}</h2>
+			<h2 className='font-semibold text-lg break-words'>{post.title}</h2>
 
 			<div className='flex items-center gap-10'>
 				<div className='flex items-center gap-2'>

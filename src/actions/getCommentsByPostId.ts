@@ -1,7 +1,15 @@
 import prisma from '@/libs/prisma';
+import clientPromiseMongo from '@/libs/mongodb';
 import getSession from './getSession';
+import { ObjectId } from 'mongodb';
 
 const getCommentsByPostId = async (postId: string) => {
+	return functionMongo(postId);
+};
+
+export default getCommentsByPostId;
+
+const functionPrisma = async (postId: string) => {
 	try {
 		const session = await getSession();
 
@@ -25,9 +33,37 @@ const getCommentsByPostId = async (postId: string) => {
 
 		return comments;
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return null;
 	}
 };
 
-export default getCommentsByPostId;
+const functionMongo = async (postId: string) => {
+	try {
+		const client = await clientPromiseMongo;
+		const db = client.db('db');
+
+		const session = await getSession();
+
+		if (!session?.user?.email) {
+			return null;
+		}
+
+		const post = await db
+			.collection('Post')
+			.findOne({ _id: new ObjectId(postId) });
+
+		if (!post) {
+			return null;
+		}
+
+		const comments = await db
+			.collection('Comment')
+			.find({ postId: new ObjectId(postId) })
+			.toArray();
+
+		return comments;
+	} catch (e) {
+		console.error(e);
+	}
+};

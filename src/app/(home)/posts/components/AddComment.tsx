@@ -1,31 +1,36 @@
 'use client';
 import { useState } from 'react';
-import { Comment } from '@prisma/client';
+// import { Comment } from '@prisma/client';
+import type { Comment } from '@/types';
 import CommentForm from '../components/CommentForm';
+import { ObjectId } from 'mongodb';
 
 const AddComment = ({
 	postId,
 	buttonStyles,
 	buttonContent,
 	isEdit,
-	comment,
+	commentBody,
+	commentId,
 }: {
 	postId: string;
 	buttonStyles?: string;
 	buttonContent: string | React.ReactNode;
 	isEdit: boolean;
-	comment?: Comment;
+	commentBody?: string;
+	commentId?: string;
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
 		<>
 			<CommentForm
+				commentId={commentId}
 				postId={postId}
 				isEdit={isEdit}
 				setIsOpen={setIsOpen}
 				isOpen={isOpen}
-				commentProp={comment}
+				commentBody={commentBody}
 			/>
 			<button onClick={() => setIsOpen(true)} className={buttonStyles}>
 				{buttonContent}

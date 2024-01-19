@@ -29,7 +29,6 @@ export default function AuthPage() {
 			redirect: false,
 		}).then((callback) => {
 			if (callback?.error) {
-				console.log('error');
 				toast.error('Invalid credentials');
 			}
 			if (callback?.ok) {
@@ -48,7 +47,7 @@ export default function AuthPage() {
 			}
 			signInCredentials();
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	};
 

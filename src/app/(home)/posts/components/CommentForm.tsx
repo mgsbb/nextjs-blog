@@ -2,31 +2,35 @@
 import { useState, FormEvent, Dispatch, SetStateAction } from 'react';
 import axios from 'axios';
 import { Dialog } from '@headlessui/react';
-import { Comment } from '@prisma/client';
+// import { Comment } from '@prisma/client';
+import type { Comment } from '@/types';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
+import { ObjectId } from 'mongodb';
 
 const CommentForm = ({
 	postId,
 	isOpen,
 	isEdit,
 	setIsOpen,
-	commentProp,
+	commentBody,
+	commentId,
 }: {
 	postId: string;
 	isOpen: boolean;
 	isEdit: boolean;
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
-	commentProp?: Comment;
+	commentBody?: string;
+	commentId?: string;
 }) => {
 	const router = useRouter();
-	const [comment, setComment] = useState(commentProp?.body || '');
+	const [comment, setComment] = useState(commentBody || '');
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
 			if (isEdit) {
-				await axios.patch(`/api/comments/${commentProp?.id}`, {
+				await axios.patch(`/api/comments/${commentId}`, {
 					comment,
 				});
 				toast.success('Comment updated!');
@@ -37,7 +41,7 @@ const CommentForm = ({
 				setComment('');
 			}
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 			toast.error('Something went wrong...');
 		}
 
@@ -54,7 +58,7 @@ const CommentForm = ({
 				<Dialog.Panel>
 					<form
 						onSubmit={handleSubmit}
-						className='flex flex-col gap-2 bg-white w-[50vw] p-10 border border-gray-300 rounded-md'
+						className='flex flex-col gap-2 bg-white md:w-[50vw] p-10 border border-gray-300 rounded-md'
 					>
 						<Dialog.Title className='font-semibold text-gray-500'>
 							{isEdit ? 'Edit' : 'Post'} comment

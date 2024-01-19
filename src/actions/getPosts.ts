@@ -1,7 +1,14 @@
 import prisma from '@/libs/prisma';
 import getSession from './getSession';
+import clientPromiseMongo from '@/libs/mongodb';
 
 const getPosts = async () => {
+	return functionMongo();
+};
+
+export default getPosts;
+
+const functionPrisma = async () => {
 	try {
 		const session = await getSession();
 
@@ -9,12 +16,29 @@ const getPosts = async () => {
 			return null;
 		}
 
-		const posts = prisma.post.findMany();
+		const posts = await prisma.post.findMany();
 
 		return posts;
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 	}
 };
 
-export default getPosts;
+const functionMongo = async () => {
+	try {
+		const client = await clientPromiseMongo;
+		const db = client.db('db');
+
+		const session = await getSession();
+
+		if (!session?.user?.email) {
+			return null;
+		}
+
+		const posts = await db.collection('Post').find({}).toArray();
+
+		return posts;
+	} catch (error) {
+		console.error(error);
+	}
+};

@@ -12,6 +12,7 @@ import { LiaCommentAlt } from 'react-icons/lia';
 import DeletePostButton from '../components/DeletePostButton';
 import CommentCard from '../components/CommentCard';
 import AddComment from '../components/AddComment';
+import { ObjectId } from 'mongodb';
 
 const PostPage = async ({
 	params: { postId },
@@ -35,7 +36,7 @@ const PostPage = async ({
 
 	const currentUser = await getCurrentUser();
 
-	const comments = await getCommentsByPostId(postId);
+	const comments = await getCommentsByPostId(postId.toString());
 
 	const author = await getUserById(post.authorId);
 
@@ -52,31 +53,36 @@ const PostPage = async ({
 				{/* Title */}
 				<h1 className='text-4xl font-bold'>{post.title}</h1>
 				{/* Details, edit, delete */}
-				<div className='flex justify-between items-center w-full'>
+				<div className='flex flex-col gap-6 lg:flex-row justify-between lg:items-center w-full'>
 					<div className='flex items-center gap-10 text-gray-600'>
 						<div className='flex items-center gap-10'>
 							<div className='flex items-center gap-2'>
 								<IoTimeOutline />
-								<span>{date}</span>
+								<span className='text-xs md:text-medium'>{date}</span>
 							</div>
 
 							<div className='flex items-center gap-2'>
 								<BsPen />
-								<span>{authorName}</span>
+								<span className='text-xs md:text-medium'>{authorName}</span>
 							</div>
 
 							<div className='flex items-center gap-2'>
-								<span>{comments ? comments.length : 0}</span>
+								<span className='text-xs md:text-medium'>
+									{comments ? comments.length : 0}
+								</span>
 								<LiaCommentAlt />
 							</div>
 						</div>
 					</div>
 
 					{/* Render only if post created by current user */}
-					{currentUser?.id === post?.authorId && (
+					{currentUser?._id.equals(post?.authorId) && (
 						<div className='flex gap-4'>
 							<Link href={`/posts/${postId}/edit`}>
-								<button className='border border-black font-bold rounded-md px-4 py-2 hover:bg-gray-100'>
+								<button
+									className='border text-sm lg:text-medium border-black 
+								font-bold rounded-md px-4 py-2 hover:bg-gray-100'
+								>
 									Edit
 								</button>
 							</Link>
@@ -108,9 +114,9 @@ const PostPage = async ({
 						) : (
 							comments?.map((comment: any) => (
 								<CommentCard
-									key={comment.id}
+									key={comment._id}
 									comment={comment}
-									currentUserId={currentUser?.id}
+									currentUserId={currentUser?._id.toString()!}
 								/>
 							))
 						)}

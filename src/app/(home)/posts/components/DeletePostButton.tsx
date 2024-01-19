@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import ConfirmationDialog from './ConfirmationDialog';
+import { ObjectId } from 'mongodb';
 
 const DeletePostButton = ({ postId }: { postId: string }) => {
 	const router = useRouter();
@@ -18,7 +19,7 @@ const DeletePostButton = ({ postId }: { postId: string }) => {
 				router.refresh();
 			}, 200);
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 			toast.error('Something went wrong...');
 		}
 	};
@@ -28,7 +29,7 @@ const DeletePostButton = ({ postId }: { postId: string }) => {
 			<button
 				onClick={() => setIsOpen(true)}
 				className='border border-red-500 rounded-md 
-						px-4 py-2 hover:bg-red-100 text-red-500 font-bold'
+						px-4 py-2 hover:bg-red-100 text-red-500 font-bold text-sm lg:text-medium'
 			>
 				Delete
 			</button>

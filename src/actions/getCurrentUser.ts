@@ -1,7 +1,14 @@
 import prisma from '@/libs/prisma';
 import getSession from './getSession';
+import clientPromiseMongo from '@/libs/mongodb';
 
 const getCurrentUser = async () => {
+	return functionMongo();
+};
+
+export default getCurrentUser;
+
+const functionPrisma = async () => {
 	try {
 		const session = await getSession();
 
@@ -21,9 +28,33 @@ const getCurrentUser = async () => {
 
 		return currentUser;
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return null;
 	}
 };
 
-export default getCurrentUser;
+const functionMongo = async () => {
+	try {
+		const client = await clientPromiseMongo;
+		const db = client.db('db');
+
+		const session = await getSession();
+
+		if (!session?.user?.email) {
+			return null;
+		}
+
+		const currentUser = await db
+			.collection('User')
+			.findOne({ email: session.user.email });
+
+		if (!currentUser) {
+			return null;
+		}
+
+		return currentUser;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+};

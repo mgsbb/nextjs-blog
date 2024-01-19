@@ -30,8 +30,8 @@ export default async function Home() {
 			) : (
 				<div className='flex flex-col gap-4 mt-10'>
 					{posts?.map((post: any) => (
-						<Tooltip key={post.id} content='Click to view post'>
-							<Link href={`/posts/${post.id}`}>
+						<Tooltip key={post._id} content='Click to view post'>
+							<Link href={`/posts/${post._id}`}>
 								<PostCard post={post} />
 							</Link>
 						</Tooltip>

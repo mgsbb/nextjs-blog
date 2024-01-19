@@ -33,7 +33,7 @@ const PostForm = ({
 				router.refresh();
 			}, 200);
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 			toast.error('Something went wrong...');
 		}
 	};
